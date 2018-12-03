@@ -35,13 +35,14 @@ script:
   - mv amexio-ng-extensions-*.tgz amexio-ng-extensions.tgz
   - cd ../
   
-  - '[ "${TRAVIS_PULL_REQUEST}" != "false" ] && git clone https://github.com/meta-magic/amexio-ios.git && cd amexio-ios
-   &&  mkdir themes && cp -rf ../dist/amexio-ng-extensions.tgz . && cp -rf ../src/styles/css/*  themes/'
+after_success: 
+  - git clone https://github.com/meta-magic/amexio-ios.git 
+  - cd amexio-ios
+  - mkdir themes && cp -rf ../dist/amexio-ng-extensions.tgz . && cp -rf ../src/styles/css/*  themes/'
   - tar -czvf themes.tar.gz  themes/*
   - git add amexio-ng-extensions.tgz  themes.tar.gz
   - git commit -m "date"
-  -  '[ "${TRAVIS_PULL_REQUEST}" != "false" ] && git push --force --quiet "https://deepali-arvind:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" HEAD:master '
-after_success: 
+  - git push --force --quiet "https://deepali-arvind:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" HEAD:master '
   - gulp coveralls
   - codecov
 
